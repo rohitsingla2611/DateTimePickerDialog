@@ -9,12 +9,14 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     DialogFragment datePicker, timePicker;
     Calendar calendarDate, calendarTime;
     String strCurrentDate, strCurrentTime;
+    long backKeyPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         calendarDate = Calendar.getInstance();
         datePicker = new DatePickerFragment();
         timePicker = new TimePickerFragment();
+        Objects.requireNonNull(getSupportActionBar()).setTitle("PICK DATE & TIME");
 
         buttonDatePicker.setOnClickListener(this);
         buttonTimePicker.setOnClickListener(this);
@@ -55,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -70,8 +73,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("SetTextI18n")
     @Override
     public void onTimeSet(TimePicker timePicker, int hour, int minutes) {
-     
+
         textViewTime.setText(hour + ":" + minutes);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        if (backKeyPressedTime + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+            return;
+        } else {
+            Toast.makeText(this, "Press again to Exit", Toast.LENGTH_SHORT).show();
+        }
+        backKeyPressedTime = System.currentTimeMillis();
+    }
+
+
 }
