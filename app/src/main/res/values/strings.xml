@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Date Time PickerDialog</string>
+    <string name="time_picker">Time Picker</string>
+    <string name="date_picker">Date Picker</string>
+    <string name="time_shown_here">TIME SHOWN HERE</string>
+    <string name="date_shown_here">DATE SHOWN HERE</string>
+</resources>
